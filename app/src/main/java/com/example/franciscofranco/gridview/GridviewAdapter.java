@@ -47,7 +47,6 @@ public class GridviewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.d("FRANCO_DEBUG", "inside getView");
         ImageView img = null;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.single_image, parent, false);

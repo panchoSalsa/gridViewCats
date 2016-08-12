@@ -25,20 +25,6 @@ public class MainActivity extends AppCompatActivity {
     private GridviewAdapter gridviewAdapter;
     private ArrayList<String> items;
 
-//    private String[] items = {
-//            "http://25.media.tumblr.com/tumblr_ly6tbck5Rv1r3i3s3o1_500.jpg",
-//            "http://25.media.tumblr.com/tumblr_ly6tbck5Rv1r3i3s3o1_500.jpg",
-//            "http://25.media.tumblr.com/tumblr_ly6tbck5Rv1r3i3s3o1_500.jpg",
-//            "http://25.media.tumblr.com/tumblr_ly6tbck5Rv1r3i3s3o1_500.jpg",
-//            "http://25.media.tumblr.com/tumblr_ly6tbck5Rv1r3i3s3o1_500.jpg",
-//            "http://25.media.tumblr.com/tumblr_ly6tbck5Rv1r3i3s3o1_500.jpg",
-//            "http://25.media.tumblr.com/tumblr_ly6tbck5Rv1r3i3s3o1_500.jpg",
-//            "http://25.media.tumblr.com/tumblr_ly6tbck5Rv1r3i3s3o1_500.jpg",
-//            "http://25.media.tumblr.com/tumblr_ly6tbck5Rv1r3i3s3o1_500.jpg",
-//            "http://25.media.tumblr.com/tumblr_ly6tbck5Rv1r3i3s3o1_500.jpg",
-//            "http://25.media.tumblr.com/tumblr_ly6tbck5Rv1r3i3s3o1_500.jpg"
-//    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,12 +49,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
 
     public void makeRequest() {
-        Log.d("FRANCO_DEBUG", "inside makeRequest");
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("format", "xml");
@@ -76,22 +59,17 @@ public class MainActivity extends AppCompatActivity {
         client.get("http://thecatapi.com/api/images/get", params, new TextHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, String res) {
-                        Log.d("FRANCO_DEBUG", "success");
                         // called when response HTTP status is "200 OK"
                         JSONObject json;
                         try {
                             json = XML.toJSONObject(res);
-                            Log.d("FRANCO_DEBUG", json.toString());
+
                             JSONArray images = json.getJSONObject("response")
                                     .getJSONObject("data")
                                     .getJSONObject("images")
                                     .getJSONArray("image");
                             for (int i = 0; i < images.length(); ++i) {
                                 items.add(images.getJSONObject(i).getString("url"));
-                            }
-
-                            for(String item: items) {
-                                Log.d("FRANCO_DEBUG", item);
                             }
 
                             gridviewAdapter.notifyDataSetChanged();
